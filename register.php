@@ -10,7 +10,7 @@ include_once __DIR__ . '/includes/header.php';
             <h1 class="h1 mb-0 text-center">Crear Cuenta</h1>
         </div>
         <div class="card-body">
-            <form action="register.php" method="post">
+            <form action="register.php" method="post" id="form-register">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre</label>
                     <input type="name" name="name" placeholder="Ingrese un nombre" class="form-control" id="name">

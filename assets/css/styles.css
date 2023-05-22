@@ -13,6 +13,14 @@ main {
 }
 
 
-.form-control:focus{
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-control.is-invalid:focus {
+    box-shadow: none;
+}
+
+.form-control.is-valid:focus {
     box-shadow: none;
 }

@@ -6,6 +6,7 @@
         <p class="text-muted mb-0">todos los derechos reservados &copy; <?= date('Y'); ?></p>
     </div>
 </footer>
+<script src="./assets/js/index.js"></script>
 </body>
 
 </html>

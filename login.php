@@ -8,7 +8,7 @@ include_once __DIR__ . '/includes/header.php';
             <h1 class="h1 mb-0 text-center">Iniciar Sesion</h1>
         </div>
         <div class="card-body">
-            <form action="login.php" method="post">
+            <form action="login.php" method="post" id="form-login">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" placeholder="Ingrese su email" class="form-control" id="email">
