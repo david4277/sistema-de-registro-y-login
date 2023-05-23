@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 $title = 'Registrarse';
+$page_active = 'register';
 include_once __DIR__ . '/includes/header.php';
 ?>
 <div class="col-12 col-md-6 col-xl-4">

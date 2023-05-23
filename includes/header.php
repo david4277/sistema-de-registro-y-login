@@ -20,12 +20,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="register.php">Registrarse</a>
-                        </li>
+                        <?php if (is_logged_in()) : ?>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="logout.php">Cerrar sesion</a>
+                            </li>
+                        <?php else : ?>
+                            <li class="nav-item">
+                                <a class="nav-link<?= $page_active === 'login' ? ' active' : ''; ?>" aria-current="page" href="login.php">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link<?= $page_active === 'register' ? ' active' : ''; ?>" href="register.php">Registrarse</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>

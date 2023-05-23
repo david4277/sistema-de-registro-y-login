@@ -1,15 +1,52 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+require_once __DIR__ . '/helpers/auth.php';
+require_once __DIR__ . '/config/database.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bienvenido</title>
-</head>
+if (!is_logged_in()) {
+    header('location: login.php');
+}
 
-<body>
+$connection = connect_database();
 
-</body>
+// Obtener informacion del usuario
+$stmt = $connection->prepare('SELECT name, email FROM users WHERE user_id=:user_id');
 
-</html>
+$stmt->bindValue('user_id', $_SESSION['user_id']);
+
+$stmt->execute();
+
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$title = 'Inicio';
+include_once __DIR__ . '/includes/header.php';
+?>
+
+<div class="col-12 col-md-6">
+
+    <div class="card">
+        <div class="card-header">
+            <h1 class="h1 mb-0">Bienvenido <?= $user['name']; ?></h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>nombre</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?= $user['name']; ?></td>
+                        <td><?= $user['email']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<?php
+include_once __DIR__ . '/includes/footer.php';
+?>

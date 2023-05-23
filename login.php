@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // verificar la contraseña
             if (password_verify($password, $user['password'])) {
                 // logear al usuario
-                login($user['id']);              
+                login($user['user_id']);            
                 header('location: /');
             }else{
                error_login();
@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $title = 'Iniciar sesion';
+$page_active = 'login';
 include_once __DIR__ . '/includes/header.php';
 ?>
 <div class="col-12 col-md-6 col-xl-4">
