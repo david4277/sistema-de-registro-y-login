@@ -18,3 +18,10 @@ function logout()
     $_SESSION = [];
     session_destroy();
 }
+
+function error_login():void{
+    $_SESSION['message'] = [
+        'type' => 'danger',
+        'content' => 'Email o contraseña incorrectos'
+    ];
+}
