@@ -2,10 +2,12 @@
 require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/config/database.php';
 
+// Comprobar si el usuario no esta autenticado
 if (!is_logged_in()) {
     header('location: login.php');
 }
 
+// Conectarse a la base de datos
 $connection = connect_database();
 
 // Obtener informacion del usuario

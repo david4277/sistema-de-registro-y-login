@@ -2,10 +2,12 @@
 require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/config/database.php';
 
+// Comprobar si el usuario esta autenticado, reedirigir al index si lo esta.
 if (is_logged_in()) {
     header('location: /');
 }
 
+// Conectarse a la base de datos.
 $connection = connect_database();
 
 $name = '';
@@ -14,12 +16,15 @@ $password = '';
 
 $errors = [];
 
+// Comprobar si se envio el formulario.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // Filtra y guarda los datos enviados por el usuario.
     $name = ucfirst(strtolower(trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS))));
     $email = filter_input(INPUT_POST,'email', FILTER_SANITIZE_EMAIL);
     $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
+    // Validar los datos del usuario.
     if ($name === '') {
         $errors['name'] = 'Ingrese un nombre';
     }elseif (!preg_match('/^[A-Z][a-z]+(\s[A-Z][a-z]+)*$/', $name)) {
@@ -31,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'El email no es valido';
     }else{
-
+        // Comprobar que el email no este registrado.
         $stmt = $connection->prepare('SELECT email FROM users WHERE email=:email');
 
         $stmt->bindValue('email', $email);
@@ -50,16 +55,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = 'La contraseña debe contener al menos 8 caracteres';
     }
 
+    // Comprobar si no hay errores y continuar con el registro.
     if (count($errors) < 1) {
 
+        // hashear la contraseña.
         $password = password_hash($password, PASSWORD_DEFAULT);
 
+        // Insertar al usuario en la base de datos.
         $stmt = $connection->prepare('INSERT INTO users (name,email,password) VALUES (:name,:email,:password)');
 
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':email', $email);
         $stmt->bindValue(':password', $password);
 
+        // Comprobar si se completo el registro y auntenticar al usuario.
         if ($stmt->execute()) {
             $_SESSION['message'] = [
                 'type' => 'success',
