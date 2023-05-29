@@ -1,0 +1,20 @@
+# Activar el módulo de reescritura de Apache
+RewriteEngine On
+
+# Prohibir el acceso a directorios sin un archivo de índice
+Options -Indexes
+
+# Quitar la extensión .php de las URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Redirigir las solicitudes a /index.php (o cualquier otra ruta de archivo) a /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/
+RewriteRule ^index\.php$ http://sistemadelogin.local/ [R=301,L]
+
+# Redirigir las solicitudes con extensión .php a la ruta sin la extensión.
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*).php [NC]
+RewriteRule ^ %1 [R=301,NC,L]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^ %{REQUEST_URI}.php [NC,L]
